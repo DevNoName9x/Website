@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bát Quái Tiên Thiên & Hậu Thiên</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 140px);
+      grid-template-rows: repeat(3, 140px);
+      gap: 2px;
+      border: 2px solid #444;
+    }
+    .cell {
+      border: 1px solid #ccc;
+      background: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6px;
+    }
+    .que  { font-size: 26px; font-weight: bold; }
+    .so   { font-size: 22px; font-weight: bold; }
+    .ten  { font-size: 14px; }
+    .hanh { font-size: 14px; color: #666; }
+    .huong { font-size: 12px; color: #999; margin-top: 4px; }
+    .section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 6px 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+<div style="display: block;">
+            <a href="./index.html" style="display: flex; align-items: center; color: #1f2937; padding: 12px 20px; text-decoration: none; font-size: 15px; transition: all 0.3s ease;">
+                <i class="fas fa-arrow-left" style="margin-right: 10px; font-size: 18px;"></i>
+                <span>Quay Lại Trang Chủ</span>
+            </a>
+        </div>
+  <!-- Tiên Thiên -->
+  <div class="section">
+    <h2>Bát Quái Tiên Thiên (Phục Hy)</h2>
+    <div class="grid">
+      <div class="cell"><div class="so">7</div><div class="que">☶</div><div class="ten">Cấn</div><div class="huong">Đông Bắc</div></div>
+      <div class="cell"><div class="so">6</div><div class="que">☵</div><div class="ten">Khảm</div><div class="huong">Bắc</div></div>
+      <div class="cell"><div class="so">4</div><div class="que">☳</div><div class="ten">Chấn</div><div class="huong">Đông</div></div>
+      <div class="cell"><div class="so">8</div><div class="que">☷</div><div class="ten">Khôn</div><div class="huong">Tây Nam</div></div>
+      <div class="cell"><div class="que">☯</div><div class="ten">Trung tâm</div></div>
+      <div class="cell"><div class="so">1</div><div class="que">☰</div><div class="ten">Càn</div><div class="huong">Tây Bắc</div></div>
+      <div class="cell"><div class="so">5</div><div class="que">☴</div><div class="ten">Tốn</div><div class="huong">Đông Nam</div></div>
+      <div class="cell"><div class="so">3</div><div class="que">☲</div><div class="ten">Ly</div><div class="huong">Nam</div></div>
+      <div class="cell"><div class="so">2</div><div class="que">☱</div><div class="ten">Đoài</div><div class="huong">Tây</div></div>
+    </div>
+  </div>
+
+  <!-- Hậu Thiên -->
+  <div class="section">
+    <h2>Bát Quái Hậu Thiên (Văn Vương - Lạc Thư)</h2>
+    <div class="grid">
+      <div class="cell"><div class="so">8</div><div class="hanh">Thổ</div><div class="que">☶ Cấn</div><div class="huong">Đông Bắc</div></div>
+      <div class="cell"><div class="so">1</div><div class="hanh">Thủy</div><div class="que">☵ Khảm</div><div class="huong">Bắc</div></div>
+      <div class="cell"><div class="so">3</div><div class="hanh">Mộc</div><div class="que">☳ Chấn</div><div class="huong">Đông</div></div>
+      <div class="cell"><div class="so">2</div><div class="hanh">Thổ</div><div class="que">☷ Khôn</div><div class="huong">Tây Nam</div></div>
+      <div class="cell"><div class="so">5</div><div class="hanh">Thổ</div><div class="ten">Trung Tâm</div></div>
+      <div class="cell"><div class="so">6</div><div class="hanh">Kim</div><div class="que">☰ Càn</div><div class="huong">Tây Bắc</div></div>
+      <div class="cell"><div class="so">4</div><div class="hanh">Mộc</div><div class="que">☴ Tốn</div><div class="huong">Đông Nam</div></div>
+      <div class="cell"><div class="so">9</div><div class="hanh">Hỏa</div><div class="que">☲ Ly</div><div class="huong">Nam</div></div>
+      <div class="cell"><div class="so">7</div><div class="hanh">Kim</div><div class="que">☱ Đoài</div><div class="huong">Tây</div></div>
+    </div>
+  </div>
+
+  <!-- Bảng Thống Kê -->
+  <div class="section">
+    <h2>Bảng Thống Kê Bát Quái</h2>
+    <table>
+      <tr>
+        <th>Hình bát quái</th><td>☰</td><td>☱</td><td>☲</td><td>☳</td><td>☴</td><td>☵</td><td>☶</td><td>☷</td>
+      </tr>
+      <tr>
+        <th>Tên quẻ</th><td>CÀN</td><td>ĐOÀI</td><td>LY</td><td>CHẤN</td><td>TỐN</td><td>KHẢM</td><td>CẤN</td><td>KHÔN</td>
+      </tr>
+      <tr>
+        <th>Số tiên thiên</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td>
+      </tr>
+      <tr>
+        <th>Số hậu thiên</th><td>6</td><td>7</td><td>9</td><td>3</td><td>4</td><td>1</td><td>8</td><td>2</td>
+      </tr>
+      <tr>
+        <th>Bốn mùa tiên thiên</th><td>Hạ</td><td>Xuân</td><td>Xuân</td><td>Đông</td><td>Hạ</td><td>Thu</td><td>Thu</td><td>Đông</td>
+      </tr>
+      <tr>
+        <th>Bốn mùa hậu thiên</th><td>Thu</td><td>Thu</td><td>Hạ</td><td>Xuân</td><td>Xuân</td><td>Đông</td><td>Đông</td><td>Hạ</td>
+      </tr>
+      <tr>
+        <th>Phương hướng tiên thiên</th><td>Nam</td><td>Đông Nam</td><td>Đông</td><td>Đông Bắc</td><td>Tây Nam</td><td>Tây</td><td>Tây Bắc</td><td>Bắc</td>
+      </tr>
+      <tr>
+        <th>Phương hướng hậu thiên</th><td>Tây Bắc</td><td>Tây</td><td>Nam</td><td>Đông</td><td>Đông Nam</td><td>Bắc</td><td>Đông Bắc</td><td>Tây Nam</td>
+      </tr>
+      <tr>
+        <th>Đặc tính tiên thiên</th><td>Sáng tạo</td><td>Hân hoan</td><td>Trung thành</td><td>Kích động</td><td>Hiền lành</td><td>Sâu sắc</td><td>Tĩnh lặng</td><td>Sáng tạo</td>
+      </tr>
+      <tr>
+        <th>Đặc tính hậu thiên</th><td>Sáng tạo</td><td>Vui sướng</td><td>Đeo bám</td><td>Khơi dậy</td><td>Dịu dàng</td><td>Không đáy</td><td>Vững chắc</td><td>Dễ tiếp thu</td>
+      </tr>
+    </table>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CellMark</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 8px;
+            margin: 10px;
+            width: 200px;
+        }
+        select {
+            padding: 6px;
+            margin: 2px;
+            width: 50px;
+        }
+        button {
+            padding: 8px 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            width: 50px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: block;">
+            <a href="./index.html" style="display: flex; align-items: center; color: #1f2937; padding: 12px 20px; text-decoration: none; font-size: 15px; transition: all 0.3s ease;">
+                <i class="fas fa-arrow-left" style="margin-right: 10px; font-size: 18px;"></i>
+                <span>Quay Lại Trang Chủ</span>
+            </a>
+        </div>
+    <div class="container">
+        <h1>CellMark</h1>
+        <p>Nhập các số nguyên cách nhau bằng dấu cách (ví dụ: 1 1 1 1 2 2):</p>
+        <input type="text" id="input" placeholder="Nhập input">
+        <button onclick="solve()">Giải</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        let lastInput = ''; // Lưu input chính để kiểm tra thay đổi
+        let searchValues = Array(15).fill(''); // Biến lưu trữ trạng thái 15 ô select
+
+        function isValidInput(arr, n) {
+            const total = arr.reduce((sum, num) => sum + num, 0);
+            const minRequired = total + (n - 1);
+            console.log(`Tổng số ô đánh dấu: ${total}, Số ô 'x' tối thiểu: ${minRequired}`);
+            return total <= 15 && minRequired <= 15;
+        }
+
+        function generateConfigurations(arr, n) {
+            const result = [];
+
+            function backtrack(index, pos, config) {
+                if (index === n) {
+                    const finalConfig = Array(15).fill('x');
+                    for (let [start, length] of config) {
+                        for (let j = start; j < start + length; j++) {
+                            finalConfig[j] = 'o';
+                        }
+                    }
+                    result.push(finalConfig.join(''));
+                    return;
+                }
+
+                for (let i = pos; i <= 15 - arr[index]; i++) {
+                    let canPlace = true;
+                    if (index > 0 && i <= config[config.length - 1][0] + config[config.length - 1][1]) {
+                        canPlace = false;
+                    }
+                    if (canPlace) {
+                        config.push([i, arr[index]]);
+                        backtrack(index + 1, i + arr[index] + 1, config);
+                        config.pop();
+                    }
+                }
+            }
+
+            backtrack(0, 0, []);
+            return result;
+        }
+
+        function displayTable(configurations, errorMessage = '') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+
+            let table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                            <th>5</th>
+                            <th>6</th>
+                            <th>7</th>
+                            <th>8</th>
+                            <th>9</th>
+                            <th>10</th>
+                            <th>11</th>
+                            <th>12</th>
+                            <th>13</th>
+                            <th>14</th>
+                            <th>15</th>
+                        </tr>
+                        <tr>
+            `;
+            // Thêm các ô select vào hàng tìm kiếm với giá trị từ searchValues
+            for (let i = 1; i <= 15; i++) {
+                table += `
+                    <td>
+                        <select id="pos${i}" onchange="updateSearchValues(${i})">
+                            <option value="" ${searchValues[i-1] === '' ? 'selected' : ''}>-</option>
+                            <option value="o" ${searchValues[i-1] === 'o' ? 'selected' : ''}>o</option>
+                            <option value="x" ${searchValues[i-1] === 'x' ? 'selected' : ''}>x</option>
+                        </select>
+                    </td>
+                `;
+            }
+            table += '</tr></thead><tbody>';
+
+            //Tính tỷ lệ
+            const totalConfigurations = configurations.length;
+            // Kiểm tra dữ liệu hợp lệ
+            for (let str of configurations) {
+                if (str.length !== 15 || !/^[xo]{15}$/.test(str)) {
+                    document.getElementById('result').innerHTML = '<p style="color: red;">Mỗi chuỗi phải có đúng 15 ký tự và chỉ chứa x hoặc o!</p>';
+                }
+            }
+
+            const rowCount = configurations.length;
+            const colCount = 15; // Mỗi chuỗi có 15 ký tự
+
+            // Tính tỷ lệ x và o cho mỗi vị trí
+            let xCount = new Array(colCount).fill(0);
+            let oCount = new Array(colCount).fill(0);
+
+            for (let str of configurations) {
+                for (let j = 0; j < colCount; j++) {
+                    if (str[j] === 'x') xCount[j]++;
+                    if (str[j] === 'o') oCount[j]++;
+                }
+            }
+
+            // Tạo bảng HTML           
+            table += '</tr>';
+       
+
+            // Thêm hàng tỷ lệ
+            table += '<tr>';
+            for (let j = 0; j < colCount; j++) {
+                table += `<td>x: ${xCount[j]}<br>o: ${oCount[j]}</td>`;
+            }
+            
+            // Thêm các cấu hình nếu có
+            if (configurations.length && configurations[0] !== "Không có trường hợp nào") {
+                for (let config of configurations) {
+                    table += '<tr>';
+                    for (let i = 0; i < 15; i++) {
+                        table += `<td>${config[i]}</td>`;
+                    }
+                    table += '</tr>';
+                }
+            }
+            //
+            table += '</tbody></table>';
+
+            // Thêm thông báo lỗi nếu có
+            const errorHtml = errorMessage ? `<p class="error">${errorMessage}</p>` : '';
+
+            resultDiv.innerHTML = `
+                <h3>Bảng các trường hợp:</h3>
+                <p>Chọn giá trị cho từng vị trí (1-15). Để trống nếu không giới hạn:</p>
+                ${errorHtml}
+                ${table}
+            `;
+        }
+
+        function updateSearchValues(index) {
+            // Cập nhật searchValues khi một ô select thay đổi
+            searchValues[index-1] = document.getElementById(`pos${index}`).value;
+            search(); // Gọi tìm kiếm ngay sau khi cập nhật
+        }
+
+        function resetSearchInputs() {
+            searchValues = Array(15).fill(''); // Reset searchValues
+            lastInput = ''; // Reset lastInput
+            for (let i = 1; i <= 15; i++) {
+                const select = document.getElementById(`pos${i}`);
+                if (select) {
+                    select.value = '';
+                }
+            }
+        }
+
+        function solve() {
+            const input = document.getElementById('input').value.trim();
+            const arr = input.split(' ').map(Number);
+            const n = arr.length;
+
+            // Reset các biến
+            resetSearchInputs();
+
+            if (!input || arr.some(isNaN)) {
+                displayTable([], "Vui lòng nhập các số nguyên hợp lệ cách nhau bằng dấu cách");
+                return;
+            }
+
+            if (!isValidInput(arr, n)) {
+                displayTable([], "Input chính không hợp lệ");
+                return;
+            }
+
+            // Lưu input hiện tại
+            lastInput = input;
+
+            // Hiển thị tất cả cấu hình
+            const configurations = generateConfigurations(arr, n);
+            displayTable(configurations.length ? configurations : ["Không có trường hợp nào"], configurations.length ? '' : "Không có cấu hình nào");
+        }
+
+        function filterConfigurations(configurations) {
+            // Lọc cấu hình dựa trên searchValues
+            return configurations.filter(config => {
+                for (let i = 0; i < 15; i++) {
+                    if (searchValues[i] !== '' && config[i] !== searchValues[i]) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+
+        function search() {
+            const input = document.getElementById('input').value.trim();
+            const arr = input.split(' ').map(Number);
+            const n = arr.length;
+
+            // Kiểm tra nếu input chính không hợp lệ
+            if (!input || arr.some(isNaN)) {
+                displayTable([], "Vui lòng nhập các số nguyên hợp lệ cách nhau bằng dấu cách");
+                return;
+            }
+
+            if (!isValidInput(arr, n)) {
+                displayTable([], "Input chính không hợp lệ");
+                return;
+            }
+
+            // Nếu input chính thay đổi, reset các biến và hiển thị tất cả cấu hình
+            if (input !== lastInput) {
+                resetSearchInputs();
+                const configurations = generateConfigurations(arr, n);
+                displayTable(configurations.length ? configurations : ["Không có trường hợp nào"], configurations.length ? '' : "Không có cấu hình nào");
+                return;
+            }
+
+            const configurations = generateConfigurations(arr, n);
+            if (!configurations.length) {
+                displayTable([], "Không có cấu hình nào để tìm kiếm");
+                return;
+            }
+
+            // Lọc và hiển thị cấu hình
+            const filteredConfigs = filterConfigurations(configurations);
+            displayTable(filteredConfigs.length ? filteredConfigs : ["Không có trường hợp nào"], filteredConfigs.length ? '' : "Không có trường hợp nào");
+        }
+    </script>
+</body>
+</html>
