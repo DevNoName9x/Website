@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Đẹp và Hiện Đại</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Menu ngang */
+        .navbar {
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .navbar a {
+            float: left;
+            color: white;
+            text-align: center;
+            padding: 16px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .navbar a i {
+            margin-right: 8px;
+        }
+        .navbar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        .navbar a.active {
+            background-color: #2563eb;
+            color: white;
+        }
+        /* Menu dọc */
+        .sidebar {
+            width: 250px;
+            background: #ffffff;
+            height: 100vh;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            padding-top: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: width 0.3s ease;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #1f2937;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .sidebar a i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .sidebar a:hover {
+            background-color: #e5e7eb;
+            color: #2563eb;
+            padding-left: 25px;
+        }
+        .sidebar a.active {
+            background-color: #2563eb;
+            color: white;
+        }
+        /* Nội dung chính */
+        .content {
+            margin-left: 270px;
+            margin-top: 70px;
+            padding: 30px;
+            flex-grow: 1;
+        }
+        .content h2 {
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+        .content p {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+            .sidebar a {
+                justify-content: center;
+            }
+            .sidebar a span {
+                display: none;
+            }
+            .content {
+                margin-left: 90px;
+            }
+            .navbar a {
+                font-size: 14px;
+                padding: 12px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu ngang -->
+    <div class="navbar">
+        <a class="active" href="#home"><i class="fas fa-home"></i> Trang Chủ</a>
+        <a href="#about"><i class="fas fa-info-circle"></i> Giới Thiệu</a>
+        <a href="#services"><i class="fas fa-cogs"></i> Dịch Vụ</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Liên Hệ</a>
+    </div>
+    <!-- Menu dọc -->
+    <div class="sidebar">
+        <a class="active" href="#dashboard"><i class="fas fa-tachometer-alt"></i> <span>Bảng Điều Khiển</span></a>
+        <a href="#profile"><i class="fas fa-user"></i> <span>Hồ Sơ</span></a>
+        <a href="#settings"><i class="fas fa-cog"></i> <span>Cài Đặt</span></a>
+        <a href="#logout"><i class="fas fa-sign-out-alt"></i> <span>Đăng Xuất</span></a>
+        <a href="./Bagua.html"><i class="fas fa-yin-yang"></i> <span>Bagua</span></a>
+        <a href="./CellMark.html"><i class="fas fa-table"></i> <span>CellMark</span></a>
+        <a href="./CellMark10.html"><i class="fas fa-table"></i> <span>CellMark10</span></a>
+    </div>
+    <!-- Nội dung chính -->
+    <div class="content">
+        <h2>Chào Mừng Đến Với Trang Web</h2>
+        <p>Đây là khu vực nội dung chính của trang web. Bạn có thể thêm các thành phần như văn bản, hình ảnh, biểu đồ, hoặc các chức năng khác tại đây.</p>
+    </div>
+</body>
+</html>
