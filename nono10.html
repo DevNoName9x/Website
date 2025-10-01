@@ -16,9 +16,14 @@
             text-align: center;
             font-size: 16px;
         }
-        .black { background-color: black; color: white; }
-        .white { background-color: white; }
-        .unknown { background-color: #ccc; }
+          /* states:
+              grid === 1 => blue background, 'O'
+              grid === 0 => black background, 'X'
+              grid === -1 => white background, ' ' (space)
+          */
+          .one { background-color: #00f83e; color: white; }
+          .zero { background-color: black; color: white; }
+          .empty { background-color: white; color: black; }
         .clue { font-weight: bold; }
         .clue-input {
             width: 120px;
@@ -272,14 +277,14 @@
                 for (let j = 0; j < SIZE; j++) {
                     let cell = document.querySelector(`.cell[data-row="${i}"][data-col="${j}"]`);
                     if (grid[i][j] === 1) {
-                        cell.className = 'cell black';
-                        cell.textContent = '■';
+                        cell.className = 'cell one';
+                        cell.textContent = 'O';
                     } else if (grid[i][j] === 0) {
-                        cell.className = 'cell white';
-                        cell.textContent = '□';
+                        cell.className = 'cell zero';
+                        cell.textContent = 'X';
                     } else {
-                        cell.className = 'cell unknown';
-                        cell.textContent = '.';
+                        cell.className = 'cell empty';
+                        cell.textContent = ' ';
                     }
                 }
             }
