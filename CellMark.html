@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,50 +12,61 @@
             margin: 0 auto;
             padding: 20px;
         }
+
         .container {
             text-align: center;
         }
+
         input[type="text"] {
             padding: 8px;
             margin: 10px;
             width: 200px;
         }
+
         select {
             padding: 6px;
             margin: 2px;
             width: 50px;
         }
+
         button {
             padding: 8px 16px;
             cursor: pointer;
             margin: 10px;
         }
+
         table {
             border-collapse: collapse;
             width: 100%;
             margin-top: 20px;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
             width: 50px;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         .error {
             color: red;
         }
     </style>
 </head>
+
 <body>
     <div style="display: block;">
-            <a href="./index.html" style="display: flex; align-items: center; color: #1f2937; padding: 12px 20px; text-decoration: none; font-size: 15px; transition: all 0.3s ease;">
-                <i class="fas fa-arrow-left" style="margin-right: 10px; font-size: 18px;"></i>
-                <span>Quay Lại Trang Chủ</span>
-            </a>
-        </div>
+        <a href="./index.html"
+            style="display: flex; align-items: center; color: #1f2937; padding: 12px 20px; text-decoration: none; font-size: 15px; transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left" style="margin-right: 10px; font-size: 18px;"></i>
+            <span>Quay Lại Trang Chủ</span>
+        </a>
+    </div>
     <div class="container">
         <h1>CellMark</h1>
         <p>Nhập các số nguyên cách nhau bằng dấu cách (ví dụ: 1 1 1 1 2 2):</p>
@@ -137,9 +149,9 @@
                 table += `
                     <td>
                         <select id="pos${i}" onchange="updateSearchValues(${i})">
-                            <option value="" ${searchValues[i-1] === '' ? 'selected' : ''}>-</option>
-                            <option value="o" ${searchValues[i-1] === 'o' ? 'selected' : ''}>o</option>
-                            <option value="x" ${searchValues[i-1] === 'x' ? 'selected' : ''}>x</option>
+                            <option value="" ${searchValues[i - 1] === '' ? 'selected' : ''}>-</option>
+                            <option value="o" ${searchValues[i - 1] === 'o' ? 'selected' : ''}>o</option>
+                            <option value="x" ${searchValues[i - 1] === 'x' ? 'selected' : ''}>x</option>
                         </select>
                     </td>
                 `;
@@ -171,14 +183,14 @@
 
             // Tạo bảng HTML           
             table += '</tr>';
-       
+
 
             // Thêm hàng tỷ lệ
             table += '<tr>';
             for (let j = 0; j < colCount; j++) {
                 table += `<td>x: ${xCount[j]}<br>o: ${oCount[j]}</td>`;
             }
-            
+
             // Thêm các cấu hình nếu có
             if (configurations.length && configurations[0] !== "Không có trường hợp nào") {
                 for (let config of configurations) {
@@ -205,7 +217,7 @@
 
         function updateSearchValues(index) {
             // Cập nhật searchValues khi một ô select thay đổi
-            searchValues[index-1] = document.getElementById(`pos${index}`).value;
+            searchValues[index - 1] = document.getElementById(`pos${index}`).value;
             search(); // Gọi tìm kiếm ngay sau khi cập nhật
         }
 
@@ -294,4 +306,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nonogram 10x10</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px;
+        }
+        td {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #000;
+            text-align: center;
+            font-size: 16px;
+        }
+        .black { background-color: black; color: white; }
+        .white { background-color: white; }
+        .unknown { background-color: #ccc; }
+        .clue { font-weight: bold; }
+        .clue-input {
+            width: 120px;
+            box-sizing: border-box;
+            text-align: center;
+            border: 1px solid transparent;
+            background: transparent;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .clue-input:focus { outline: 1px solid #2563eb; background: #fff; }
+        .controls { margin: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Nonogram 10x10</h1>
+    <div style="display: block;">
+        <a href="./index.html"
+            style="display: flex; align-items: center; color: #1f2937; padding: 12px 20px; text-decoration: none; font-size: 15px; transition: all 0.3s ease;">
+            <i class="fas fa-arrow-left" style="margin-right: 10px; font-size: 18px;"></i>
+            <span>Quay Lại Trang Chủ</span>
+        </a>
+    </div>
+    <div class="controls">
+        <button onclick="solveNonogram()">Giải Nonogram</button>
+    </div>
+    <table id="nonogram-grid">
+        <tr>
+            <td></td>
+            <td class="clue"><input class="clue-input" data-col="0" value="1"></td>
+            <td class="clue"><input class="clue-input" data-col="1" value="2,1"></td>
+            <td class="clue"><input class="clue-input" data-col="2" value="7"></td>
+            <td class="clue"><input class="clue-input" data-col="3" value="2,1,2"></td>
+            <td class="clue"><input class="clue-input" data-col="4" value="2,1"></td>
+            <td class="clue"><input class="clue-input" data-col="5" value="1,2"></td>
+            <td class="clue"><input class="clue-input" data-col="6" value="7"></td>
+            <td class="clue"><input class="clue-input" data-col="7" value="2,2"></td>
+            <td class="clue"><input class="clue-input" data-col="8" value="2,1"></td>
+            <td class="clue"><input class="clue-input" data-col="9" value="1"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="0" value="2"></td><td class="cell" data-row="0" data-col="0"></td><td class="cell" data-row="0" data-col="1"></td><td class="cell" data-row="0" data-col="2"></td><td class="cell" data-row="0" data-col="3"></td><td class="cell" data-row="0" data-col="4"></td><td class="cell" data-row="0" data-col="5"></td><td class="cell" data-row="0" data-col="6"></td><td class="cell" data-row="0" data-col="7"></td><td class="cell" data-row="0" data-col="8"></td><td class="cell" data-row="0" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="1" value="2"></td><td class="cell" data-row="1" data-col="0"></td><td class="cell" data-row="1" data-col="1"></td><td class="cell" data-row="1" data-col="2"></td><td class="cell" data-row="1" data-col="3"></td><td class="cell" data-row="1" data-col="4"></td><td class="cell" data-row="1" data-col="5"></td><td class="cell" data-row="1" data-col="6"></td><td class="cell" data-row="1" data-col="7"></td><td class="cell" data-row="1" data-col="8"></td><td class="cell" data-row="1" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="2" value="2"></td><td class="cell" data-row="2" data-col="0"></td><td class="cell" data-row="2" data-col="1"></td><td class="cell" data-row="2" data-col="2"></td><td class="cell" data-row="2" data-col="3"></td><td class="cell" data-row="2" data-col="4"></td><td class="cell" data-row="2" data-col="5"></td><td class="cell" data-row="2" data-col="6"></td><td class="cell" data-row="2" data-col="7"></td><td class="cell" data-row="2" data-col="8"></td><td class="cell" data-row="2" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="3" value="3,1"></td><td class="cell" data-row="3" data-col="0"></td><td class="cell" data-row="3" data-col="1"></td><td class="cell" data-row="3" data-col="2"></td><td class="cell" data-row="3" data-col="3"></td><td class="cell" data-row="3" data-col="4"></td><td class="cell" data-row="3" data-col="5"></td><td class="cell" data-row="3" data-col="6"></td><td class="cell" data-row="3" data-col="7"></td><td class="cell" data-row="3" data-col="8"></td><td class="cell" data-row="3" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="4" value="6"></td><td class="cell" data-row="4" data-col="0"></td><td class="cell" data-row="4" data-col="1"></td><td class="cell" data-row="4" data-col="2"></td><td class="cell" data-row="4" data-col="3"></td><td class="cell" data-row="4" data-col="4"></td><td class="cell" data-row="4" data-col="5"></td><td class="cell" data-row="4" data-col="6"></td><td class="cell" data-row="4" data-col="7"></td><td class="cell" data-row="4" data-col="8"></td><td class="cell" data-row="4" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="5" value="2,3"></td><td class="cell" data-row="5" data-col="0"></td><td class="cell" data-row="5" data-col="1"></td><td class="cell" data-row="5" data-col="2"></td><td class="cell" data-row="5" data-col="3"></td><td class="cell" data-row="5" data-col="4"></td><td class="cell" data-row="5" data-col="5"></td><td class="cell" data-row="5" data-col="6"></td><td class="cell" data-row="5" data-col="7"></td><td class="cell" data-row="5" data-col="8"></td><td class="cell" data-row="5" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="6" value="2,2"></td><td class="cell" data-row="6" data-col="0"></td><td class="cell" data-row="6" data-col="1"></td><td class="cell" data-row="6" data-col="2"></td><td class="cell" data-row="6" data-col="3"></td><td class="cell" data-row="6" data-col="4"></td><td class="cell" data-row="6" data-col="5"></td><td class="cell" data-row="6" data-col="6"></td><td class="cell" data-row="6" data-col="7"></td><td class="cell" data-row="6" data-col="8"></td><td class="cell" data-row="6" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="7" value="1,2"></td><td class="cell" data-row="7" data-col="0"></td><td class="cell" data-row="7" data-col="1"></td><td class="cell" data-row="7" data-col="2"></td><td class="cell" data-row="7" data-col="3"></td><td class="cell" data-row="7" data-col="4"></td><td class="cell" data-row="7" data-col="5"></td><td class="cell" data-row="7" data-col="6"></td><td class="cell" data-row="7" data-col="7"></td><td class="cell" data-row="7" data-col="8"></td><td class="cell" data-row="7" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="8" value="2,2"></td><td class="cell" data-row="8" data-col="0"></td><td class="cell" data-row="8" data-col="1"></td><td class="cell" data-row="8" data-col="2"></td><td class="cell" data-row="8" data-col="3"></td><td class="cell" data-row="8" data-col="4"></td><td class="cell" data-row="8" data-col="5"></td><td class="cell" data-row="8" data-col="6"></td><td class="cell" data-row="8" data-col="7"></td><td class="cell" data-row="8" data-col="8"></td><td class="cell" data-row="8" data-col="9"></td>
+        </tr>
+        <tr>
+            <td class="clue"><input class="clue-input" data-row="9" value="5"></td><td class="cell" data-row="9" data-col="0"></td><td class="cell" data-row="9" data-col="1"></td><td class="cell" data-row="9" data-col="2"></td><td class="cell" data-row="9" data-col="3"></td><td class="cell" data-row="9" data-col="4"></td><td class="cell" data-row="9" data-col="5"></td><td class="cell" data-row="9" data-col="6"></td><td class="cell" data-row="9" data-col="7"></td><td class="cell" data-row="9" data-col="8"></td><td class="cell" data-row="9" data-col="9"></td>
+        </tr>
+    </table>
+    <div id="status">Nhấn "Giải Nonogram" để bắt đầu!</div>
+
+    <script>
+        const SIZE = 10;
+        let grid = Array(SIZE).fill().map(() => Array(SIZE).fill(-1)); // -1: chưa biết, 0: trắng, 1: đen
+
+        // Manh mối sẽ được đọc từ input trong DOM
+        let rowClues = [];
+        let colClues = [];
+
+        function parseCluesFromDOM() {
+            rowClues = Array(SIZE).fill().map(() => []);
+            colClues = Array(SIZE).fill().map(() => []);
+            // rows: inputs with data-row
+            document.querySelectorAll('.clue-input[data-row]').forEach(inp => {
+                const r = parseInt(inp.getAttribute('data-row'), 10);
+                const raw = inp.value.trim();
+                rowClues[r] = raw === '' ? [] : raw.split(',').map(s => parseInt(s.trim(), 10));
+            });
+            // cols: inputs with data-col
+            document.querySelectorAll('.clue-input[data-col]').forEach(inp => {
+                const c = parseInt(inp.getAttribute('data-col'), 10);
+                const raw = inp.value.trim();
+                colClues[c] = raw === '' ? [] : raw.split(',').map(s => parseInt(s.trim(), 10));
+            });
+        }
+        // Hàm giải Nonogram cho một dòng hoặc cột
+        // Generate all possible placements (arrays of 0/1) for given clues and length
+        function generatePlacements(clues, length) {
+            const placements = [];
+            // special case: no clues => all zeros
+            if (!clues || clues.length === 0) {
+                placements.push(Array(length).fill(0));
+                return placements;
+            }
+
+            const totalBlocks = clues.reduce((a, b) => a + b, 0);
+            const minRequired = totalBlocks + (clues.length - 1); // minimal occupied cells including required gaps
+            const extra = length - minRequired;
+
+            function backtrack(idx, pos, arr) {
+                // idx: which clue index we're placing
+                // pos: current start position to try (0-based)
+                if (idx === clues.length) {
+                    // fill remaining with zeros
+                    const line = Array(length).fill(0);
+                    for (let seg of arr) {
+                        for (let k = 0; k < seg.len; k++) line[seg.start + k] = 1;
+                    }
+                    placements.push(line);
+                    return;
+                }
+
+                const remainingClues = clues.slice(idx);
+                const remainingTotal = remainingClues.reduce((a, b) => a + b, 0) + (remainingClues.length - 1);
+
+                // the latest start for this block is length - remainingTotal
+                for (let s = pos; s <= length - remainingTotal; s++) {
+                    arr.push({ start: s, len: clues[idx] });
+                    backtrack(idx + 1, s + clues[idx] + 1, arr);
+                    arr.pop();
+                }
+            }
+
+            backtrack(0, 0, []);
+            return placements;
+        }
+
+        // Solve line or column using deterministic overlap technique.
+        // clues: array of numbers (e.g. [2,1])
+        // line: array of length SIZE (values -1 unknown, 0 white, 1 black)
+        // opts: { row: r } or { col: c } to know how to write back into grid
+        function nonoSolution(clues, line, opts = {}) {
+            // build placements
+            const placements = generatePlacements(clues, SIZE);
+
+            // filter placements compatible with current line
+            const valid = placements.filter(p => {
+                for (let i = 0; i < SIZE; i++) {
+                    if (line[i] !== -1 && line[i] !== p[i]) return false;
+                }
+                return true;
+            });
+
+            if (valid.length === 0) {
+                // no valid placements given current constraints — nothing to do
+                return false;
+            }
+
+            // deduce cells that are the same across all valid placements
+            const deduced = Array(SIZE).fill(-1);
+            for (let i = 0; i < SIZE; i++) {
+                const first = valid[0][i];
+                let same = true;
+                for (let k = 1; k < valid.length; k++) {
+                    if (valid[k][i] !== first) { same = false; break; }
+                }
+                if (same) deduced[i] = first; // 0 or 1
+            }
+
+            // apply deductions to grid and collect changed cells
+            const changed = [];
+            if (opts.row !== undefined) {
+                const r = opts.row;
+                for (let j = 0; j < SIZE; j++) {
+                    if (deduced[j] !== -1 && grid[r][j] !== deduced[j]) {
+                        grid[r][j] = deduced[j];
+                        changed.push([r, j, deduced[j]]);
+                    }
+                }
+            } else if (opts.col !== undefined) {
+                const c = opts.col;
+                for (let i = 0; i < SIZE; i++) {
+                    if (deduced[i] !== -1 && grid[i][c] !== deduced[i]) {
+                        grid[i][c] = deduced[i];
+                        changed.push([i, c, deduced[i]]);
+                    }
+                }
+            } else {
+                // best-effort: try to mutate the passed-in line if it's a reference to grid row
+                for (let i = 0; i < SIZE; i++) {
+                    if (deduced[i] !== -1 && line[i] !== deduced[i]) {
+                        line[i] = deduced[i];
+                        // if line actually references grid row, update grid as well
+                    }
+                }
+            }
+
+            if (changed.length > 0) {
+                updateGrid(changed);
+                return true;
+            }
+            return false;
+        }
+        // kiểm tra thỏa mãn
+        function isSolved(){
+            return grid.every(row => row.every(cell => cell !== -1));
+        }
+
+        function solveNonogram(){
+            // read clues from inputs and reset grid
+            parseCluesFromDOM();
+            grid = Array(SIZE).fill().map(() => Array(SIZE).fill(-1));
+            updateGrid();
+            // iterate until no progress or solved
+            let progress = true;
+            let anyChange = false;
+            while(progress && !isSolved()){
+                progress = false;
+                for(let i=0; i<SIZE; i++){
+                   // solve row i
+                   if(grid[i].includes(-1)){
+                       const clues = rowClues[i];
+                       const changed = nonoSolution(clues, grid[i], { row: i });
+                       if (changed) { progress = true; anyChange = true; }
+                   }
+                   // solve column i
+                   const colLine = grid.map(row => row[i]);
+                   if(colLine.includes(-1)){
+                       const clues = colClues[i];
+                       const changed = nonoSolution(clues, colLine, { col: i });
+                       if (changed) { progress = true; anyChange = true; }
+                   }
+                }
+            }
+            if (isSolved()) {
+                document.getElementById('status').textContent = 'Đã giải xong!';
+            } else if (!anyChange) {
+                document.getElementById('status').textContent = 'Không thể suy ra thêm ô bằng phương pháp hiện tại.';
+            }
+            return isSolved();
+        }
+        // Cập nhật giao diện
+        function updateGrid(changedCells = []) {
+            if (changedCells.length > 0) {
+                changedCells.forEach(([i, j, value]) => {
+                });
+            }
+            for (let i = 0; i < SIZE; i++) {
+                for (let j = 0; j < SIZE; j++) {
+                    let cell = document.querySelector(`.cell[data-row="${i}"][data-col="${j}"]`);
+                    if (grid[i][j] === 1) {
+                        cell.className = 'cell black';
+                        cell.textContent = '■';
+                    } else if (grid[i][j] === 0) {
+                        cell.className = 'cell white';
+                        cell.textContent = '□';
+                    } else {
+                        cell.className = 'cell unknown';
+                        cell.textContent = '.';
+                    }
+                }
+            }
+        } 
+        // Khởi tạo lưới
+        updateGrid();
+    </script>
+</body>
+</html>
