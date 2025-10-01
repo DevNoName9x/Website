@@ -22,7 +22,7 @@
               grid === -1 => white background, ' ' (space)
           */
           .one { background-color: #00f83e; color: white; }
-          .zero { background-color: black; color: white; }
+          .zero { background-color: rgb(165, 165, 165); color: white; }
           .empty { background-color: white; color: black; }
         .clue { font-weight: bold; }
         .clue-input {
@@ -35,6 +35,7 @@
             font-size: 14px;
         }
         .clue-input:focus { outline: 1px solid #2563eb; background: #fff; }
+    .clue-input.invalid { outline: 2px solid #dc2626; background: #fff6f6; }
         .controls { margin: 20px; }
     </style>
 </head>
@@ -157,6 +158,25 @@
                 colClues[c] = raw === '' ? [] : raw.split(',').map(s => parseInt(s.trim(), 10));
             });
         }
+
+        // validate that all clue inputs are filled (required)
+        function validateClues() {
+            const inputs = Array.from(document.querySelectorAll('.clue-input'));
+            let firstEmpty = null;
+            inputs.forEach(inp => inp.classList.remove('invalid'));
+            for (let inp of inputs) {
+                if (inp.value.trim() === '') {
+                    inp.classList.add('invalid');
+                    if (!firstEmpty) firstEmpty = inp;
+                }
+            }
+            if (firstEmpty) {
+                document.getElementById('status').textContent = 'Vui lòng điền tất cả các manh mối (các ô highlighted màu đỏ).';
+                firstEmpty.focus();
+                return false;
+            }
+            return true;
+        }
         // Hàm giải Nonogram cho một dòng hoặc cột
         // Generate all possible placements (arrays of 0/1) for given clues and length
         function generatePlacements(clues, length) {
@@ -272,7 +292,8 @@
         }
 
         function solveNonogram(){
-            // read clues from inputs and reset grid
+            // validate inputs then read clues from inputs and reset grid
+            if (!validateClues()) return false;
             parseCluesFromDOM();
             grid = Array(SIZE).fill().map(() => Array(SIZE).fill(-1));
             updateGrid();
@@ -327,7 +348,9 @@
             }
         } 
         // Khởi tạo lưới
-        updateGrid();
+    // mark inputs required and initialize
+    document.querySelectorAll('.clue-input').forEach(i => i.required = true);
+    updateGrid();
     </script>
 </body>
 </html>
